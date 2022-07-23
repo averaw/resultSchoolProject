@@ -14,4 +14,4 @@ const schema = new Schema(
   }
 );
 
-module.export = model("Token", schema);
+module.exports = model("Token", schema);

@@ -33,4 +33,4 @@ const schema = new Schema(
   }
 );
 
-module.export = model("User", schema);
+module.exports = model("User", schema);
