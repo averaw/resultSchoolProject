@@ -9,9 +9,9 @@ router
   .route('/')
   .get(auth, async (req, res) => {
     try {
-      const {orderBy, equalTo} = req.query //это параметры которые мы получаем с фронта 
-      const list = await Comment.find({ [orderBy]: equalTo }) //фильтруем комментарии такое себе не понятно 
-      res.send(list) //отправляем список всех комментариев 
+      const {orderBy, equalTo} = req.query
+      const list = await Comment.find({ [orderBy]: equalTo })
+      res.send(list)
     } catch (e) {
       res.status(500).json({
         message: 'На сервере произошла ошибка. Попробуйте позже'
@@ -26,6 +26,7 @@ router
       })
       res.status(201).send(newComment)
     } catch (e) {
+      console.log(e.message)
       res.status(500).json({
         message: 'На сервере произошла ошибка. Попробуйте позже'
       })
@@ -35,10 +36,9 @@ router
 router.delete('/:commentId', auth, async (req, res) => {
   try {
     const { commentId } = req.params
-    const removedComment = await Comment.findById(commentId) //получаем  ком который нужно удалить
+    const removedComment = await Comment.findById(commentId)
 
-    if (removedComment.userId.toString() === req.user._id) // получаем кто может удалить комент ,пользователь который его оставил !
-     {
+    if (removedComment.userId.toString() === req.user._id) {
       await removedComment.remove()
       return res.send(null)
     } else {
